@@ -4,12 +4,16 @@ import mysql.connector
 app = Flask(__name__)
 app.secret_key = "todo_secret_key"
 
+import os
+
 # ---------------- DB CONNECTION ----------------
+# Use environment variables for Vercel/Production, fallback to localhost for development
 db = mysql.connector.connect(
-    host="localhost",
-    user="root",
-    password="root",
-    database="todoapp"
+    host=os.getenv("DB_HOST", "localhost"),
+    user=os.getenv("DB_USER", "root"),
+    password=os.getenv("DB_PASSWORD", "root"),
+    database=os.getenv("DB_NAME", "todoapp"),
+    port=int(os.getenv("DB_PORT", 3306))
 )
 cursor = db.cursor(dictionary=True)
 
