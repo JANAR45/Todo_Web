@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Login - TaskMaster</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='todo.css') }}">
+</head>
+
+<body>
+
+  <div class="main-wrapper">
+    <div class="content-container auth-container">
+      <header class="app-header">
+        <div class="logo">
+          <i class="fas fa-layer-group"></i>
+          <h1>TaskMaster</h1>
+        </div>
+        <p class="subtitle">Welcome back! Please login.</p>
+      </header>
+
+      <div class="card">
+        <form method="post" action="/login" class="task-form" style="flex-direction: column;">
+          <div class="input-group">
+            <span class="icon"><i class="fas fa-envelope"></i></span>
+            <input type="email" name="email" placeholder="Email Address" required>
+          </div>
+
+          <div class="input-group">
+            <span class="icon"><i class="fas fa-lock"></i></span>
+            <input type="password" name="password" id="passwordInput" placeholder="Password" required>
+            <span class="password-toggle-icon" onclick="togglePassword('passwordInput', this)">
+              <i class="far fa-eye"></i>
+            </span>
+          </div>
+
+          <button type="submit" class="btn-primary" style="justify-content: center; margin-top: 10px;">
+            Login <i class="fas fa-arrow-right"></i>
+          </button>
+        </form>
+
+        <div style="text-align: center; margin-top: 20px; font-size: 0.9rem;">
+          <p style="color: var(--text-secondary);">
+            Don't have an account?
+            <a href="/register" style="color: var(--primary-color); text-decoration: none; font-weight: 500;">Register
+              here</a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function togglePassword(inputId, iconSpan) {
+      const input = document.getElementById(inputId);
+      const icon = iconSpan.querySelector('i');
+
+      if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove('fa-eye');
+        icon.classList.add('fa-eye-slash');
+      } else {
+        input.type = "password";
+        icon.classList.remove('fa-eye-slash');
+        icon.classList.add('fa-eye');
+      }
+    }
+  </script>
+
+</body>
+
+</html>

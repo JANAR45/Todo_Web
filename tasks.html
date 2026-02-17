@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>ADD Tasks</title>
+    </head>
+    <body>
+        <input type="text" id="addtask" placeholder="Enter the task" required>
+        <input type="date" id="duedate">
+        <button type="submit" id="task">Add Task</button>
+        
+        <ul id="res"></ul>
+        
+        <script>
+            let arr=[];
+            const res = document.getElementById("res");
+            const addtask = document.getElementById("addtask");
+          const btn = document.getElementById("task");
+            btn.onclick=function(){
+                if(addtask.value===""){
+                    res.innerText="Please enter a task";
+                    return;
+                }
+                arr.push(addtask.value);
+         res.innerHTML = arr.map(task => `<li>${task}</li>`).join("");               
+         addtask.value="";
+            }
+        </script>
+    </body>
+    
+
+</html>

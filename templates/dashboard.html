@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo Dashboard</title>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="stylesheet" href="{{ url_for('static', filename='todo.css') }}">
+</head>
+
+<body>
+
+  <div class="main-wrapper">
+    <div class="content-container">
+      <header class="app-header">
+        <div class="logo">
+          <i class="fas fa-layer-group"></i>
+          <h1>TaskMaster</h1>
+        </div>
+        <p class="subtitle">Focus on what matters most.</p>
+      </header>
+
+      <!-- Add Task Form -->
+      <div class="card add-task-card">
+        <form method="post" action="/add-task" class="task-form">
+          <div class="input-group">
+            <span class="icon"><i class="fas fa-tasks"></i></span>
+            <input type="text" name="title" placeholder="Add a new task..." required autocomplete="off">
+          </div>
+          <div class="input-group date-group">
+            <span class="icon"><i class="far fa-calendar"></i></span>
+            <input type="date" name="date" required>
+          </div>
+          <button type="submit" class="btn-primary">
+            <i class="fas fa-plus"></i> Add
+          </button>
+        </form>
+      </div>
+
+      <!-- Task List -->
+      <div class="tasks-wrapper">
+        <ul class="task-list">
+          {% for task in tasks %}
+          <li class="task-item {{ 'completed' if task.status == 'COMPLETED' else '' }}">
+            <div class="task-content">
+              <div class="task-status-indicator"></div>
+              <div class="task-details">
+                <span class="task-title">{{ task.title }}</span>
+                <span class="task-date"><i class="far fa-clock"></i> Due: {{ task.due_date }}</span>
+              </div>
+            </div>
+
+            <div class="task-actions">
+              {% if task.status == 'PENDING' %}
+              <a href="/complete/{{ task.id }}" class="action-btn btn-complete" title="Mark as Done">
+                <i class="fas fa-check"></i>
+              </a>
+              {% else %}
+              <span class="status-badge"><i class="fas fa-check-circle"></i> Done</span>
+              {% endif %}
+              <a href="/delete/{{ task.id }}" class="action-btn btn-delete" title="Delete Task">
+                <i class="fas fa-trash-alt"></i>
+              </a>
+            </div>
+          </li>
+          {% else %}
+          <li class="empty-state">
+            <div class="empty-icon">
+              <i class="fas fa-clipboard-check"></i>
+            </div>
+            <h3>No tasks found</h3>
+            <p>You're all caught up! Add a new task to get started.</p>
+          </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <footer class="app-footer">
+        <a href="/logout" class="logout-link">
+          <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+      </footer>
+    </div>
+  </div>
+
+</body>
+
+</html>
